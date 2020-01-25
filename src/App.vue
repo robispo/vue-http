@@ -28,6 +28,16 @@
             </button>
           </div>
         </form>
+        <hr />
+        <button class="btn btn-primary" @click.prevent="getData">
+          Get Data
+        </button>
+        <br /><br />
+        <ul class="list-group">
+          <li v-for="(u, i) in users" :key="i" class="list-group-item">
+            {{ u.name }} - {{ u.email }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -40,12 +50,24 @@
         user: {
           name: '',
           email: ''
-        }
+        },
+        users: []
       };
     },
     methods: {
       submit() {
-        console.log(this.user);
+        this.$http
+          .post('https://vue-http-7e0ae.firebaseio.com/data.json', this.user)
+          .then(
+            r => console.log(r),
+            e => console.log(e)
+          );
+      },
+      getData() {
+        this.$http
+          .get('https://vue-http-7e0ae.firebaseio.com/data.json')
+          .then(r => r.json())
+          .then(d => (this.users = d));
       }
     }
   };
