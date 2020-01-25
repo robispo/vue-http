@@ -56,16 +56,14 @@
     },
     methods: {
       submit() {
-        this.$http
-          .post('https://vue-http-7e0ae.firebaseio.com/data.json', this.user)
-          .then(
-            r => console.log(r),
-            e => console.log(e)
-          );
+        this.$http.post('', this.user).then(
+          r => console.log(r),
+          e => console.log(e)
+        );
       },
       getData() {
         this.$http
-          .get('https://vue-http-7e0ae.firebaseio.com/data.json')
+          .get('')
           .then(r => r.json())
           .then(d => (this.users = d));
       }
