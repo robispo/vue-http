@@ -52,7 +52,8 @@
           email: ''
         },
         users: [],
-        resource: {}
+        resource: {},
+        node: 'data'
       };
     },
     methods: {
@@ -65,8 +66,12 @@
         this.resource.saveAlt(this.user);
       },
       getData() {
-        this.$http
-          .get('data.json')
+        // this.$http
+        //   .get('data.json')
+        //   .then(r => r.json())
+        //   .then(d => (this.users = d));
+        this.resource
+          .getData({ node: this.node })
           .then(r => r.json())
           .then(d => (this.users = d));
       }
@@ -76,9 +81,12 @@
         saveAlt: {
           method: 'POST',
           url: 'dataAlt.json'
+        },
+        getData: {
+          method: 'GET'
         }
       };
-      this.resource = this.$resource('data.json', {}, customActions);
+      this.resource = this.$resource('{node}.json', {}, customActions);
     }
   };
 </script>
