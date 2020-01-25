@@ -51,22 +51,34 @@
           name: '',
           email: ''
         },
-        users: []
+        users: [],
+        resource: {}
       };
     },
     methods: {
       submit() {
-        this.$http.post('', this.user).then(
-          r => console.log(r),
-          e => console.log(e)
-        );
+        // this.$http.post('data.json', this.user).then(
+        //   r => console.log(r),
+        //   e => console.log(e)
+        // );
+        this.resource.save({}, this.user);
+        this.resource.saveAlt(this.user);
       },
       getData() {
         this.$http
-          .get('')
+          .get('data.json')
           .then(r => r.json())
           .then(d => (this.users = d));
       }
+    },
+    created() {
+      const customActions = {
+        saveAlt: {
+          method: 'POST',
+          url: 'dataAlt.json'
+        }
+      };
+      this.resource = this.$resource('data.json', {}, customActions);
     }
   };
 </script>
